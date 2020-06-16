@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Calculator</title> 
+</head>
+<body>
+  <div class="container">
+    <div class="calc-wrap">
+      <div class="calc">
+        <div class="tablo"> 
+          <input id="calculation-result" value="0" type="number"></input>
+        </div>
+        <div class="buttons-wrap">
+          <div class="numbers">
+            <button data-int="1" class="button numbers-button">1</button>
+            <button data-int="2" class="button numbers-button">2</button>
+            <button data-int="3" class="button numbers-button">3</button>
+            <button data-int="4" class="button numbers-button">4</button>
+            <button data-int="5" class="button numbers-button">5</button>
+            <button data-int="6" class="button numbers-button">6</button>
+            <button data-int="7" class="button numbers-button">7</button>
+            <button data-int="8" class="button numbers-button">8</button>
+            <button data-int="9" class="button numbers-button">9</button>
+            <button data-int="0" class="button numbers-button zero">0</button>
+            <button data-int="." class="button numbers-button dot">.</button>
+          </div>
+          <div class="operations">
+            <button data-op="/" class="button operations-button">/</button>
+            <button data-op="*" class="button operations-button">*</button>
+            <button data-op="+" class="button operations-button">+</button>
+            <button data-op="-" class="button operations-button">-</button>
+            <button data-op="%" class="button operations-button">%</button>
+            <button data-op="C" class="button operations-button">C</button>
+            <button data-op="=" class="button operations-button equal">=</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
