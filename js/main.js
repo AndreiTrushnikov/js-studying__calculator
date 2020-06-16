@@ -3,7 +3,9 @@ $(function () {
     first : '',
     op : '',
     last: ''
-  }
+  };
+  let tempCount = 0;
+  let tablo = $('#calculation-result');
 
 /* Функция проверки временного хранилища данных */
   function checkTemp() {
@@ -15,14 +17,13 @@ $(function () {
 /* Функция прибавления числа к числу в табло */
   function addNum(num) {
     let tablo = $('#calculation-result');
-    let tempTabloValue;
+    let tempTabloValue = '';
     let newNumPart = num.getAttribute('data-int');
     let check = checkTemp();
-    let tempCount = 0;
 
     // Если первое число
     if (!check) {
-      if (tablo.val().length > 14) return
+      if (tablo.val().length > 14) return;
       if (tablo.val() == 0) {
         tablo.val(newNumPart);
         tempCalc.first = tablo.val();
@@ -34,41 +35,21 @@ $(function () {
     }
 
     // Если уже сработал знак операции
+    if ((check) && (tempCount == 1)) {
+      if (tablo.val().length > 14) return;
+      tempTabloValue = tablo.val();
+      tablo.val(tempTabloValue + newNumPart);
+      tempCalc.last = tablo.val();
+    }
+
+    // Если уже сработал знак операции в первый раз
     if ((check) && (tempCount == 0)) {
       tempCount = 1;
-      tablo.val('0');
-      if (tablo.val().length > 14) return
-      if (tablo.val() == 0) {
-        tablo.val(newNumPart);
-        tempCalc.last = tablo.val();
-      } else {
-        if (tempCount == 0) {
-          tempTabloValue = tablo.val();
-          tablo.val(tempTabloValue + newNumPart);
-          tempCalc.last = tablo.val();
-        } else {
-
-        }
-      }
-    }
-
-    if ((check) && (tempCount == 1)) {
-      if (tablo.val().length > 14) return
-      if (tablo.val() == 0) {
-        tablo.val(newNumPart);
-        tempCalc.last = tablo.val();
-      } else {
-        if (tempCount == 0) {
-          tempTabloValue = tablo.val();
-          tablo.val(tempTabloValue + newNumPart);
-          tempCalc.last = tablo.val();
-        } else {
-
-        }
-      }
+      tablo.val(newNumPart);
+      tempCalc.last = tablo.val();
+      tempTabloValue = '';
     }
     console.log(tempCalc);
-
   }
 
 /* Функция сброса */
@@ -78,8 +59,36 @@ $(function () {
     tempCalc.first = '';
     tempCalc.op = '';
     tempCalc.last = '';
+    tablo.closest('.tablo').removeClass('zero-error');
+    $('button').removeAttr('disabled');
   }
 
+  /* Функция РАВНО */
+  function equal() {
+    let tablo = $('#calculation-result');
+    switch (tempCalc.op) {
+      case '+': 
+        tablo.val(parseInt(+tempCalc.first + +tempCalc.last));
+        break;
+      case '-': 
+        tablo.val(parseInt(+tempCalc.first - +tempCalc.last));
+        break;
+      case '*': 
+        tablo.val(parseInt(+tempCalc.first * +tempCalc.last));
+        break;
+      case '/': 
+      // debugger
+        if (tempCalc.last == '0') {
+          tablo.closest('.tablo').addClass('zero-error');
+          $('button').attr('disabled','disabled');
+          $('button[data-op="C"]').removeAttr('disabled');
+        } else {
+          tablo.val(parseInt(+tempCalc.first / +tempCalc.last));
+        }
+        break;
+    }
+   
+  }
 /* Функция определения операции */
   function operations(op) {
     let tablo = $('#calculation-result');
@@ -112,16 +121,29 @@ $(function () {
         break;
       case '=':
         console.log('Equal');
-        tempCalc.op = '=';
+        equal();
         break;
     }
   }
 
-    $('.numbers-button').on('click', function() {
-      addNum(this);
-    })
-    
-    $('.operations-button').on('click', function() {
-      operations(this.getAttribute('data-op'));
-    })
+  /* Ввод с клавиатуры */
+  tablo.on('change', function() {
+    if (tempCalc.op == '') {
+      tempCalc.first = tablo.val();
+    } else {
+      tempCalc.last = tablo.val();
+    }
+    if ((char.keyCode == 187) || (char.keyCode == 107)) {
+      tempCalc.op = '+';
+    }
+  });
+
+  // Нажатия на клавишы калькулятора
+  $('.numbers-button').on('click', function() {
+    addNum(this);
+  });
+
+  $('.operations-button').on('click', function() {
+    operations(this.getAttribute('data-op'));
+  });
 });

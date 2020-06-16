@@ -106,3 +106,17 @@ html, body {
 .equal {
  flex-basis: 48%;
 }
+
+/* Errors */
+.zero-error #calculation-result {
+  color: red;
+}
+.zero-error:after {
+  color: red;
+  font-size: 20px;
+  content: 'Деление на ноль невозможно!';
+  display: block;
+  position: absolute;
+  top: -70px;
+  right: 0;
+}
