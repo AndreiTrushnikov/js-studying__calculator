@@ -66,28 +66,32 @@ $(function () {
   /* Функция РАВНО */
   function equal() {
     let tablo = $('#calculation-result');
+    let result;
     switch (tempCalc.op) {
-      case '+': 
-        tablo.val(parseInt(+tempCalc.first + +tempCalc.last));
+      case '+':
+        result = parseInt(+tempCalc.first + +tempCalc.last);
         break;
-      case '-': 
-        tablo.val(parseInt(+tempCalc.first - +tempCalc.last));
+      case '-':
+        result = parseInt(+tempCalc.first - +tempCalc.last);
         break;
-      case '*': 
-        tablo.val(parseInt(+tempCalc.first * +tempCalc.last));
+      case '*':
+        result = parseInt(+tempCalc.first * +tempCalc.last);
         break;
-      case '/': 
+      case '/':
       // debugger
         if (tempCalc.last == '0') {
           tablo.closest('.tablo').addClass('zero-error');
           $('button').attr('disabled','disabled');
           $('button[data-op="C"]').removeAttr('disabled');
         } else {
-          tablo.val(parseInt(+tempCalc.first / +tempCalc.last));
+          result = parseInt(+tempCalc.first / +tempCalc.last);
         }
         break;
     }
-   
+    tablo.val(result)
+    tempCalc.first = result;
+    tempCalc.op = '';
+    tempCalc.last = '';
   }
 /* Функция определения операции */
   function operations(op) {
