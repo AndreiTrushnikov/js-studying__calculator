@@ -8,26 +8,30 @@ html, body {
   font-size: 20px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
+.container {
+  max-width: 1200px;
+  position: relative;
+}
 .calc-wrap {
   margin: 0 auto;
-  width: 360px;  
-  transform: translate(0, 50%);
+  width: 400px;
+  height: 400px;
+  position: relative;
+  /* transform: translate(0%, 50%); */
 }
 .calc {
-  width: 360px;
-  height: 360px;
+  width: inherit;
+  height: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #b2afff;
+  background-color: #b6bfc0;
   border-radius: 20px;
 }
 .tablo {
-  width: 290px;
+  width: 400px;
   height: 50px;
-  border: 2px solid #9880b3;
   margin: 10px 0;
   border-radius: 10px;
   font-size: 30px;
@@ -35,31 +39,35 @@ html, body {
   display: flex; 
   align-items: center;
   justify-content: flex-end;
-  background-color: #fff;
   position: relative;
 }
 .tablo:before {
   position: absolute;
   content: 'CALCULATOR';
-  top: -32px;
-  right: 5px;
+  top: -25px;
+  right: 40px;
   font-size: 16px;
   color: #757575;
 }
 #calculation-result {
   border-radius: 10px;
-  width: 100%;
+  border: 2px solid #5af4ff;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
   border: none;
   text-align: right;
-  padding-right: 5px;
+  padding: 0 10px;
+  height: 40px;
+  font-size: 20px;
 }
 .button {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #9880b3; 
+  width: 55px;
+  height: 55px;
+  border: 1px solid #949494; 
   background: linear-gradient(180deg, #fff, #d4d4d4);
   outline: none !important;
-  box-shadow: 0 0 5px 1px #e4e4e4;
+  box-shadow: 0 0 5px 1px #aaaaaa;
   border-radius: 10px;
 }
 .button:hover {
@@ -68,55 +76,48 @@ html, body {
 .button:active {
   box-shadow: none;
 }
-
 .buttons-wrap {
   display: flex;
   justify-content: center;
-  height: 230px;
+  height: 250px;
 }
-
 .numbers {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 180px;
-  padding-right: 10px;
+  width: 190px;
+  padding-right: 5px;
 }
 .numbers-button {
   margin-bottom: 10px;
 }
-
 .zero {
   flex-basis: 65%;
 }
-
 .operations {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: flex-end;
   justify-content: space-between;
-  width: 110px;
+  width: 120px;
 }
 .operations-button {
   margin-bottom: 0px;
 }
-.operations-button:nth-child(2n-1) {
-  margin-right: 10px;
-}
 .equal {
  flex-basis: 48%;
 }
-
 /* Errors */
 .zero-error #calculation-result {
   color: red;
 }
 .zero-error:after {
   color: red;
-  font-size: 20px;
+  font-size: 16px;
   content: 'Деление на ноль невозможно!';
   display: block;
   position: absolute;
-  top: -70px;
-  right: 0;
+  top: 17px;
+  right: 50px;
 }

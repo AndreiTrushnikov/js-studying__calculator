@@ -6,6 +6,8 @@ $(function () {
   };
   let tempCount = 0;
   let tablo = $('#calculation-result');
+  let isEqual = false;
+  let tempTablo;
 
 /* Функция проверки временного хранилища данных */
   function checkTemp() {
@@ -14,22 +16,57 @@ $(function () {
       return true;
     } else {return false;}
   }
+
+/* Функция проверки на число с плавющей запятой*/
+  function checkFloat() {
+    let tab = tablo.val()
+    if (tab.contains('.')) {
+
+    }
+  }
 /* Функция прибавления числа к числу в табло */
-  function addNum(num) {
-    let tablo = $('#calculation-result');
+  function addNum(numObj) {
     let tempTabloValue = '';
-    let newNumPart = num.getAttribute('data-int');
+    let newNumPart = numObj.getAttribute('data-int');
     let check = checkTemp();
 
+
+    if (isEqual) {
+      clear()
+      isEqual = false
+    }
+
+    tempTablo = tablo.val()
+
+    if (tempTablo.includes('.') && (newNumPart == '.')) {
+      // debugger
+      if (check) {
+        return
+      }
+      newNumPart = ''
+    }
+
+    function checkDot(newNumPart) {
+      if (((tempTablo == 0) && (newNumPart == '.')) || (newNumPart == '.')){
+        return newNumPart = '0.'
+      } else {
+        return newNumPart;
+      }
+    }
+// debugger
     // Если первое число
     if (!check) {
+      // debugger
       if (tablo.val().length > 14) return;
-      if (tablo.val() == 0) {
-        tablo.val(newNumPart);
+      if ((tablo.val() == '0') && (newNumPart != '.')){
+        console.log('tablo =',tablo.val());
+        tablo.val(checkDot(newNumPart));
         tempCalc.first = tablo.val();
       } else {
         tempTabloValue = tablo.val();
-        tablo.val(tempTabloValue + newNumPart);
+        tempTablo = tempTabloValue + newNumPart
+
+        tablo.val(tempTablo);
         tempCalc.first = tablo.val();
       }
     }
@@ -38,23 +75,34 @@ $(function () {
     if ((check) && (tempCount == 1)) {
       if (tablo.val().length > 14) return;
       tempTabloValue = tablo.val();
+
       tablo.val(tempTabloValue + newNumPart);
       tempCalc.last = tablo.val();
     }
 
-    // Если уже сработал знак операции в первый раз
+    // // Если уже сработал знак операции в первый раз
     if ((check) && (tempCount == 0)) {
       tempCount = 1;
-      tablo.val(newNumPart);
+      if (tempCalc.first == '0') {
+
+      }
+      debugger
+      console.log('tablo =',tablo.val());
+      tablo.val(checkDot(newNumPart));
       tempCalc.last = tablo.val();
       tempTabloValue = '';
     }
+
     console.log(tempCalc);
+  }
+
+/* Функция вычисления процентов */
+  function percent() {
+    return tempCalc.first * (100-tempCalc.last) / 100; 
   }
 
 /* Функция сброса */
   function clear() {
-    let tablo = $('#calculation-result');
     tablo.val('0');
     tempCalc.first = '';
     tempCalc.op = '';
@@ -65,46 +113,62 @@ $(function () {
 
   /* Функция РАВНО */
   function equal() {
-    let tablo = $('#calculation-result');
+    isEqual = true;
     let result;
+
+    if (!checkTemp()) {
+      // debugger
+      clear()
+      return
+    }
+
     switch (tempCalc.op) {
       case '+':
-        result = parseInt(+tempCalc.first + +tempCalc.last);
+        result = +tempCalc.first + +tempCalc.last;
         break;
       case '-':
-        result = parseInt(+tempCalc.first - +tempCalc.last);
+        result = +tempCalc.first - +tempCalc.last;
         break;
       case '*':
-        result = parseInt(+tempCalc.first * +tempCalc.last);
+        result = +tempCalc.first * +tempCalc.last;
         break;
       case '/':
-      // debugger
         if (tempCalc.last == '0') {
           tablo.closest('.tablo').addClass('zero-error');
           $('button').attr('disabled','disabled');
           $('button[data-op="C"]').removeAttr('disabled');
         } else {
-          result = parseInt(+tempCalc.first / +tempCalc.last);
+          result = +tempCalc.first / +tempCalc.last;
         }
+        break;
+      case '%':
+        result = percent();
         break;
     }
     tablo.val(result)
     tempCalc.first = result;
     tempCalc.op = '';
     tempCalc.last = '';
+    console.log(tempCalc);
+    console.log(isEqual);
+
   }
+
 /* Функция определения операции */
   function operations(op) {
-    let tablo = $('#calculation-result');
-    let tempTabloValue = tablo.val();
     tempCount = 0;
+
+    if (isEqual) {
+      isEqual = false
+    }
+
     switch (op) {
       case '+':
         console.log('Plus');
         tempCalc.op = '+';
         break;
       case '-':
-        console.log('minus');
+        console.log('Minus');
         tempCalc.op = '-';
         break;
       case '*':
@@ -115,7 +179,7 @@ $(function () {
         console.log('Divide');
         tempCalc.op = '/';
         break;
-      case '%': 
+      case '%':
         console.log('Percent');
         tempCalc.op = '%';
         break;
@@ -137,9 +201,9 @@ $(function () {
     } else {
       tempCalc.last = tablo.val();
     }
-    if ((char.keyCode == 187) || (char.keyCode == 107)) {
-      tempCalc.op = '+';
-    }
+    // if ((char.keyCode == 187) || (char.keyCode == 107)) {
+    //   tempCalc.op = '+';
+    // }
   });
 
   // Нажатия на клавишы калькулятора
